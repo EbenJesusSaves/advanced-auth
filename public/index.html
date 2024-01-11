@@ -55,7 +55,7 @@
 
         <section class="page" id="register">
             <h2>Register</h2>
-            <form id="formRegister">
+            <form id="formRegister" onsubmit="Auth.register(event)">
                 <fieldset>
                     <label>Your Name</label>
                     <input placeholder="You Name" id="register_name" autocomplete="name" required>
@@ -73,7 +73,7 @@
         <section class="page" id="login">
             <h2>Log In</h2>
 
-            <form id="formLogin">
+            <form id="formLogin" onsubmit="Auth.login(event)">
                 <fieldset>
                     <label for="login_email">Your Email</label>
                     <input placeholder="email" id="login_email" required>

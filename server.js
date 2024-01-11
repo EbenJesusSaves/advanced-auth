@@ -31,42 +31,53 @@ app.use(
 );
 
 //checks if user already exist
-function findUser(email) {
-  const result = db.data.users.filter((u) => u.email === email);
-  if (result.length === 0) return null;
-  return result;
-}
+// function findUser(email) {
+//   const result = db.data.users.filter((u) => u.email === email);
+//   if (result.length === 0) return null;
+//   return result;
+// }
 
 // ADD HERE THE REST OF THE ENDPOINTS
-app.post("/auth/login/", (req, res) => {
-  const userFound = findUser(res.body.email);
-  if (bcrypt.compareSync(req.body.password, userFound.password)) {
-    res.ok({ ok: true, name: userFound.name, email: userFound.email });
-    userFound;
+app.post("/auth/login", (req, res) => {
+  const user = findUser(req.body.email);
+  if (user) {
+    // user exists, check password
+    if (bcrypt.compareSync(req.body.password, user.password)) {
+      res.send({ ok: true, email: user.email, name: user.name });
+    } else {
+      res.send({ ok: false, message: "Data is invalid" });
+    }
   } else {
-    res.send({
-      ok: false,
-      message: "Wrong Credentials, Check email or password",
-    });
+    // User doesn't exist
+    res.send({ ok: false, message: "Data is invalid" });
   }
 });
 
+function findUser(email) {
+  const results = db.data.users.filter((u) => u.email == email);
+  if (results.length == 0) return undefined;
+  return results[0];
+}
+
 app.post("/auth/register", (req, res) => {
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(req.body.password, salt);
 
   const user = {
     name: req.body.name,
     email: req.body.email,
-    password: hashedPassword,
+    password: hash,
   };
-  const foundUser = findUser(user.email);
-  if (foundUser) {
-    //send error to client
-    res.send({ ok: false, message: "User already exist" });
+  const userFound = findUser(req.body.email);
+
+  if (userFound) {
+    // User already registered
+    res.send({ ok: false, message: "User already exists" });
   } else {
-    db.data.push(user);
+    // New User
+    db.data.users.push(user);
     db.write();
+    res.send({ ok: true });
   }
 });
 
