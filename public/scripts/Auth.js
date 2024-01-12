@@ -44,7 +44,7 @@ const Auth = {
     console.log(response);
   },
   login: async (event) => {
-    event.preventDefault();
+    if (event) event.preventDefault();
     const credentials = {
       email: document.getElementById("login_email").value,
       password: document.getElementById("login_password").value,
@@ -62,6 +62,9 @@ const Auth = {
       const credentials = await navigator.credentials.get({
         password: true,
       });
+      document.getElementById("login_email").value = credentials.id;
+      document.getElementById("login_password").value = credentials.password;
+      Auth.login();
       console.log(credentials);
     }
   },
