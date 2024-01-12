@@ -7,8 +7,11 @@ const Auth = {
 
   postLogin: (response, user) => {
     if (response.ok) {
-      isLoggedIn = true;
-      account = user;
+      console.log("hiii");
+      Auth.isLoggedIn = true;
+      Auth.account = user;
+      Auth.updateStatus();
+      Router.go("/account");
     } else {
       alert(response?.message);
     }
@@ -43,6 +46,13 @@ const Auth = {
     });
     console.log(response);
     console.log("hi");
+  },
+
+  logout: () => {
+    Auth.isLoggedIn = false;
+    Auth.account = null;
+    Auth.updateStatus();
+    Router.go("/login");
   },
   updateStatus() {
     if (Auth.isLoggedIn && Auth.account) {
