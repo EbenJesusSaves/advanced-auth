@@ -5,7 +5,7 @@ const Auth = {
   isLoggedIn: false,
   account: null,
   register: async (event) => {
-    event.preventDefault;
+    event.preventDefault();
 
     const user = {
       name: document.getElementById("register_name").value,
@@ -17,12 +17,15 @@ const Auth = {
 
     console.log(response);
   },
-  login: async () => {
+  login: async (event) => {
+    event.preventDefault();
     const credentials = {
       email: document.getElementById("login_email").value,
       password: document.getElementById("login_password").value,
     };
     const response = await API.login(credentials);
+    console.log(response);
+    console.log("hi");
   },
   updateStatus() {
     if (Auth.isLoggedIn && Auth.account) {
