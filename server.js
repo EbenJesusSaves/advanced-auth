@@ -38,6 +38,27 @@ app.use(
 // }
 
 // ADD HERE THE REST OF THE ENDPOINTS
+
+app.post("/auth/login-google", (req, res) => {
+  let jwt = jwtJsDecode.jwtDecode(req.body.credential);
+
+  let user = {
+    email: jwt.payload.email,
+    name: jwt.payload.given_name + " " + jwt.payload.family_name,
+    password: false,
+  };
+  const foundUser = findUser(req.body.email);
+  if (foundUser) {
+    user.google = payload.aud;
+    db.write();
+    res.send({ ok: true, name: user.name, email: foundUser.email });
+  } else {
+    db.data.users.push({ ...user, federated: { google: jwt.payload.aud } });
+    db.write();
+    res.send({ ok: true, name: user.name, email: user.email });
+  }
+});
+
 app.post("/auth/login", (req, res) => {
   const user = findUser(req.body.email);
   if (user) {
