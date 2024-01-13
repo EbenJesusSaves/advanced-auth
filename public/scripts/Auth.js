@@ -79,7 +79,7 @@ const Auth = {
   },
 
   loginFromGoogle: async (data) => {
-    const response = await API.loginFromGoogle({ credentials: data });
+    const response = await API.loginFromGoogle(data);
     Auth.postLogin(response, {
       name: response.name,
       email: response.email,

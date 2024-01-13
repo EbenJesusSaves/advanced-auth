@@ -9,7 +9,7 @@ const API = {
   },
 
   loginFromGoogle: async (data) => {
-    return await API.makePostRequest(API.endpoint + "login-google", user);
+    return await API.makePostRequest(API.endpoint + "login-google", data);
   },
 
   makePostRequest: async (url, data) => {

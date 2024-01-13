@@ -47,13 +47,15 @@ app.post("/auth/login-google", (req, res) => {
     name: jwt.payload.given_name + " " + jwt.payload.family_name,
     password: false,
   };
-  const foundUser = findUser(user.email);
+  const foundUser = findUser(req.body.email);
   if (foundUser) {
     user.google = payload.aud;
     db.write();
-    res.send({ ok: true, name: user.name, email: user.email });
+    res.send({ ok: true, name: user.name, email: foundUser.email });
   } else {
-    db.data.users.push({ ...user, google: payload.aud });
+    db.data.users.push({ ...user, federated: { google: jwt.payload.aud } });
+    db.write();
+    res.send({ ok: true, name: user.name, email: user.email });
   }
 });
 
