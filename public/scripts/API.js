@@ -8,6 +8,10 @@ const API = {
     return await API.makePostRequest(API.endpoint + "register", user);
   },
 
+  loginFromGoogle: async (data) => {
+    return await API.makePostRequest(API.endpoint + "login-google", user);
+  },
+
   makePostRequest: async (url, data) => {
     const response = await fetch(url, {
       method: "POST",
