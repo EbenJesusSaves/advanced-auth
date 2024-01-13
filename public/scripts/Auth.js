@@ -77,6 +77,10 @@ const Auth = {
       navigator.credentials.preventSilentAccess();
     }
   },
+
+  loginFromGoogle: (data) => {
+    console.log(data);
+  },
   updateStatus() {
     if (Auth.isLoggedIn && Auth.account) {
       document
