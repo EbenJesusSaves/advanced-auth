@@ -41,6 +41,20 @@ app.use(
 
 app.post("/auth/login-google", (req, res) => {
   let jwt = jwtJsDecode.jwtDecode(req.body.credential);
+
+  let user = {
+    email: jwt.payload.email,
+    name: jwt.payload.given_name + " " + jwt.payload.family_name,
+    password: false,
+  };
+  const foundUser = findUser(user.email);
+  if (foundUser) {
+    user.google = payload.aud;
+    db.write();
+    res.send({ ok: true, name: user.name, email: user.email });
+  } else {
+    db.data.users.push(...user);
+  }
 });
 
 app.post("/auth/login", (req, res) => {
