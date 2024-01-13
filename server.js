@@ -38,6 +38,11 @@ app.use(
 // }
 
 // ADD HERE THE REST OF THE ENDPOINTS
+
+app.post("/auth/login-google", (req, res) => {
+  let jwt = jwtJsDecode.jwtDecode(req.body.credential);
+});
+
 app.post("/auth/login", (req, res) => {
   const user = findUser(req.body.email);
   if (user) {

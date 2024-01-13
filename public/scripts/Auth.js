@@ -78,8 +78,12 @@ const Auth = {
     }
   },
 
-  loginFromGoogle: (data) => {
-    console.log(data);
+  loginFromGoogle: async (data) => {
+    const response = await API.loginFromGoogle({ credentials: data });
+    Auth.postLogin(response, {
+      name: response.name,
+      email: response.email,
+    });
   },
   updateStatus() {
     if (Auth.isLoggedIn && Auth.account) {
