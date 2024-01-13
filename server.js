@@ -53,7 +53,7 @@ app.post("/auth/login-google", (req, res) => {
     db.write();
     res.send({ ok: true, name: user.name, email: user.email });
   } else {
-    db.data.users.push(...user);
+    db.data.users.push({ ...user, google: payload.aud });
   }
 });
 
