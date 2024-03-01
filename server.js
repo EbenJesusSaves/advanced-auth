@@ -59,6 +59,21 @@ app.post("/auth/login-google", (req, res) => {
   }
 });
 
+app.post("/auth/auth-options", (req, res) => {
+  const foundUser = findUser(req.body.email);
+
+  if (foundUser) {
+    res.send({
+      password: foundUser.password != false,
+      google: foundUser.federated && foundUser.federated.google,
+      webauthn: foundUser.webauthn,
+    });
+  } else {
+    res.send({
+      password: true,
+    });
+  }
+});
 app.post("/auth/login", (req, res) => {
   const user = findUser(req.body.email);
   if (user) {

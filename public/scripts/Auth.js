@@ -45,17 +45,20 @@ const Auth = {
   },
   login: async (event) => {
     if (event) event.preventDefault();
-    const credentials = {
-      email: document.getElementById("login_email").value,
-      password: document.getElementById("login_password").value,
-    };
-    const response = await API.login(credentials);
-    Auth.postLogin(response, {
-      ...credentials,
-      name: response.name,
-    });
-    console.log(response);
-    console.log("hi");
+    if (Auth.loginStep === 1) {
+    } else {
+      //STEP 2
+      const credentials = {
+        email: document.getElementById("login_email").value,
+        password: document.getElementById("login_password").value,
+      };
+      const response = await API.login(credentials);
+      Auth.postLogin(response, {
+        ...credentials,
+        name: response.name,
+      });
+      console.log(response);
+    }
   },
   autoLogin: async () => {
     if (window.PasswordCredential) {
@@ -108,6 +111,7 @@ const Auth = {
         .forEach((e) => (e.style.display = "none"));
     }
   },
+  loginStep: 1,
   init: () => {
     document.getElementById("login_section_password").hidden = true;
     document.getElementById("login_section_webauthn").hidden = true;
