@@ -108,7 +108,10 @@ const Auth = {
         .forEach((e) => (e.style.display = "none"));
     }
   },
-  init: () => {},
+  init: () => {
+    document.getElementById("login_section_password").hidden = true;
+    document.getElementById("login_section_webauthn").hidden = true;
+  },
 };
 Auth.updateStatus();
 Auth.autoLogin();

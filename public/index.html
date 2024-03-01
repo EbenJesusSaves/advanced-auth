@@ -71,6 +71,9 @@
 
                     <label>Your Password</label>
                     <input type="password" id="register_password" autocomplete="new-password" required>
+
+
+
                 </fieldset>
 
                 <button>Register Account</button>
@@ -84,8 +87,14 @@
                 <fieldset>
                     <label for="login_email">Your Email</label>
                     <input placeholder="email" id="login_email" required>
-                    <label for="login_password">Password</label>
-                    <input type="password" id="login_password">
+
+                    <section hidden id="login_section_password">
+                        <label for="login_password">Password</label>
+                        <input type="password" id="login_password">
+                    </section>
+                    <section hidden id="login_section_webauthn">
+
+                    </section>
                 </fieldset>
                 <fieldset>
                     <div id="g_id_onload"
